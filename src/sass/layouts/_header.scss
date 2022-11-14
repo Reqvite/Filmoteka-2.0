@@ -1,0 +1,53 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $headerBG-color;
+  height: 56px;
+}
+.logo {
+}
+.header__form {
+  position: relative;
+  display: flex;
+}
+
+.header__search-more {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 100%;
+
+  border-style: none;
+  background-color: transparent;
+}
+.header__input {
+  width: 634px;
+  height: 36px;
+  &::placeholder {
+    padding-left: 5%;
+  }
+}
+
+.header__submit-btn {
+  position: absolute;
+  right: 194px;
+  height: 100%;
+
+  border-style: none;
+  background-color: transparent;
+}
+.header__icon {
+}
+.navbar {
+  display: flex;
+}
+
+.navbar__list {
+  display: flex;
+}
+.navbar__item {
+}
+.navbar__btn {
+}
