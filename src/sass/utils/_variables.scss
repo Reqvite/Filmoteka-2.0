@@ -3,14 +3,19 @@ $mainFont: 'Roboto', sans-serif;
 
 // Text colors
 $main-text-color: #000000;
-$secondary-text-color: #ff6b08;
+$secondary-text-color: #ffffff;
+$accentColor: #ff6a00;
 $header-text-color: #ffffff;
 $filmDetails-text-color: #8c8c8c;
 $footer-text-color: #545454;
 
 //Bg colors
 $headerBG-color: #121212;
-$accentBg-color: #ff6b08;
+$bodyBg-color: linear-gradient(
+  109.56deg,
+  rgba(27, 17, 56, 0.96) 70%,
+  #000000 100%
+);
 
 $buttonBg-color: #ff6b01;
 $hover-focusBG-color: #f59133;

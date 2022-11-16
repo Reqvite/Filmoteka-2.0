@@ -1,4 +1,4 @@
-import { popularMovieMarkup } from "../markups/popularMovieMarkup";
+import { popularMovieMarkup } from "../markups/populaMarkups";
 
   import Swiper, {Autoplay} from 'swiper';
   // import Swiper and modules styles
@@ -14,12 +14,8 @@ const swiper = new Swiper('.swiper', {
 
     autoplay: {
         delay: 1500,
-        // reverseDirection: true
   },
      
-
-  // If we need pagination
-
 
 });
 

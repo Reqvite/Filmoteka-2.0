@@ -1,6 +1,13 @@
 body {
-  background-color: white;
+  background: linear-gradient(
+    109.56deg,
+    rgba(27, 17, 56, 0.96) 70%,
+    #000000 100%
+  );
+  background-repeat: no-repeat;
   color: $main-text-color;
   font-family: $mainFont;
   font-weight: 500;
+
+  height: 100%;
 }
