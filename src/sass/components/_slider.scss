@@ -1,34 +1,10 @@
-.carousel {
-  position: relative;
-  outline: 1px solid red;
-}
-
-.main-slider {
-  display: flex;
-  overflow-y: hidden;
+.swiper {
+  max-width: 1200px;
   height: 400px;
-}
-
-.main-slider__item {
 }
 
 .main-slider__img {
   object-fit: cover;
-  min-width: 250px;
+  min-width: 200px;
   height: 400px;
-}
-
-.switchLeft,
-.switchRight {
-  cursor: pointer;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  background-color: #2f44ff;
-}
-
-.switchLeft {
-  position: absolute;
-}
-.switchRight {
-  position: absolute;
 }

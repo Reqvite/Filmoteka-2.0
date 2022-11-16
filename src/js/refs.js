@@ -1,4 +1,4 @@
 export const refs = {
-    mainSliderList: document.querySelector('.main-slider')
+    mainSliderList: document.querySelector('.swiper-wrapper')
 
 }
