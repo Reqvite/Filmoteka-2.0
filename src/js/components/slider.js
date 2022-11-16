@@ -9,12 +9,12 @@ const swiper = new Swiper('.swiper', {
   // Optional parameters
     modules: [Autoplay],
 
-    loop: true,
     slidesPerView: 5,
     spaceBetween: 10,
 
     autoplay: {
         delay: 1500,
+        // reverseDirection: true
   },
      
 
