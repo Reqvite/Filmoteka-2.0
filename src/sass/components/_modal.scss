@@ -5,7 +5,6 @@
   left: 0;
   height: 100vh;
   width: 100vw;
-  overflow-y: scroll;
   background-color: rgba(0, 0, 0, 0.2);
 
   &.is-hidden {
@@ -15,10 +14,11 @@
 }
 
 .modal {
+  overflow-y: scroll;
   padding: 40px;
   padding-bottom: 40px;
   width: auto;
-  height: auto;
+  height: 100vh;
   background-color: white;
 
   position: absolute;
@@ -26,6 +26,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
+  @include tablet {
+    overflow-y: hidden;
+    height: auto;
+  }
   // &.actors {
   //   width: 700px;
   //   height: 400px;
@@ -36,8 +40,13 @@
 
 .modal-container-actors {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @include tablet {
+    flex-direction: row;
+  }
 }
 
 .modal-container-actors__img {
@@ -54,8 +63,13 @@
   line-height: 1.15;
 }
 .actor-films-list {
-  margin-top: 15px;
   display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+
+  @include tablet {
+    flex-direction: row;
+  }
 }
 
 .actor-films-list__item {
@@ -78,6 +92,11 @@
 
 .modal-container-film {
   display: flex;
+  flex-direction: column;
+
+  @include tablet {
+    flex-direction: row;
+  }
 
   padding: 10px 10px 35px 10px;
 
@@ -85,7 +104,6 @@
     width: 95vw;
     max-width: 380px;
     height: 95vh;
-    overflow-y: scroll;
   }
 
   @include tablet {

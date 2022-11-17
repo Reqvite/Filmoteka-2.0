@@ -7,9 +7,20 @@ const swiper = new Swiper('.swiper', {
   // Optional parameters
     modules: [Autoplay],
 
-    slidesPerView: 5,
+    slidesPerView: 1,
     spaceBetween: 10,
 
+  breakpoints: {
+    768: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    },
+    1280: {
+      slidesPerView: 5,
+      spaceBetween: 10
+    }
+  },
+  
     autoplay: {
         delay: 1500,
   },

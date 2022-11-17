@@ -24,10 +24,14 @@
   background-color: transparent;
 }
 .header__input {
-  width: 634px;
+  max-width: 634px;
   height: 36px;
   &::placeholder {
     padding-left: 5%;
+  }
+
+  @include desktop {
+    width: 600px;
   }
 }
 
