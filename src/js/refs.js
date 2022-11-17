@@ -1,4 +1,5 @@
 export const refs = {
+    body: document.querySelector('body'),
     //main section
     mainContainer: document.querySelector('main'),
 
@@ -6,6 +7,8 @@ export const refs = {
     popularFilmList: document.querySelector('.popular-list'),
     
     //modal
-    modal: document.querySelector('.backdrop'),
+    backdropModal: document.querySelector('.backdrop'),
+    modal: document.querySelector('.modal'),
+
 
 }

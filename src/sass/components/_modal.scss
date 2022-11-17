@@ -1,4 +1,5 @@
 .backdrop {
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,12 +17,170 @@
 .modal {
   padding: 40px;
   padding-bottom: 40px;
-  max-width: 320px;
-  width: 100%;
+  width: auto;
   height: auto;
   background-color: white;
 
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+
+  // &.actors {
+  //   width: 700px;
+  //   height: 400px;
+  // }
+}
+
+//actors modal
+
+.modal-container-actors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-container-actors__img {
+  width: 200px;
+  object-fit: contain;
+}
+.modal-details {
+  margin-left: 15px;
+  text-align: center;
+}
+.modal-details__name {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.actor-films-list {
+  margin-top: 15px;
+  display: flex;
+}
+
+.actor-films-list__item {
+  &:not(:first-child) {
+    margin-left: 10px;
+  }
+}
+.actor-films-list__img {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 150px;
+}
+.actor-films-list__title {
+  color: $accentColor;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+//film
+
+.modal-container-film {
+  display: flex;
+
+  padding: 10px 10px 35px 10px;
+
+  @media screen and (max-width: 767.98px) {
+    width: 95vw;
+    max-width: 380px;
+    height: 95vh;
+    overflow-y: scroll;
+  }
+
+  @include tablet {
+    padding: 16px 20px 46px 20px;
+    width: 704px;
+  }
+
+  @include desktop {
+    width: 804px;
+  }
+}
+
+.modal-img {
+  width: 340px;
+  height: 478px;
+  object-fit: cover;
+  object-position: cover;
+}
+
+.film-details {
+  @media screen and (max-width: 767.98px) {
+    margin-top: 20px;
+  }
+  @include tablet {
+    width: 50%;
+    margin-left: 68px;
+  }
+  @include desktop {
+    margin-left: 16px;
+  }
+}
+
+.film-details__main-title {
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.details-list {
+  margin-top: 20px;
+}
+
+.details-list__item {
+  display: flex;
+  align-items: center;
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
+  &:nth-child(3) > .details-list__information-2 {
+    text-transform: uppercase;
+  }
+}
+.details-list_title {
+  color: $filmDetails-text-color;
+  font-size: 12px;
+  line-height: 1.33;
+  width: 100px;
+}
+
+.details-list__information-1 {
+  display: block;
+  padding: 3px 10px;
+  border-radius: 5px;
+  color: white;
+  background-color: $detailsList-informationColor;
+  font-size: 12px;
+  line-height: 1.16;
+  text-transform: uppercase;
+
+  &.masterpiece {
+    background-color: #66cc33;
+  }
+  &.good {
+    background-color: #ffcc33;
+  }
+  &.bad {
+    background-color: #f00000;
+  }
+}
+
+.details-list__information-2 {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.16;
+}
+.film-details__secondary-title {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 1.16;
+  text-transform: uppercase;
+}
+.film-details__about {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.66;
+}
+.buttons-list {
 }

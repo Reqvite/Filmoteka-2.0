@@ -1,6 +1,4 @@
-import { popularMovieMarkup } from "../markups/populaMarkups";
-
-  import Swiper, {Autoplay} from 'swiper';
+import Swiper, {Autoplay} from 'swiper';
   // import Swiper and modules styles
 
 
