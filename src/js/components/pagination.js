@@ -5,11 +5,7 @@ import { fetchPopularMovieDay } from "../service/fetchPopularMovie";
 
 
 export const handlePagination = (e) => {
-    //refs
     let paginationArrowBackward = document.querySelector('.pagination-list__arrow-backward');
-
-
-    //default
 
     let pageNumber = e.target.textContent;
 
