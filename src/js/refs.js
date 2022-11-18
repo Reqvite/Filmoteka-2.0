@@ -10,5 +10,7 @@ export const refs = {
     backdropModal: document.querySelector('.backdrop'),
     modal: document.querySelector('.modal'),
 
-
+    //pagination
+    paginationList: document.querySelector('.pagination-list'),
+    paginationArrowBackward: document.querySelector('.pagination-list__arrow-backward'),
 }
