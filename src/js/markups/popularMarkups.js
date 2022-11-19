@@ -1,6 +1,5 @@
 import { fetchPopularMovieDay } from "../service/fetchPopularMovie"
 import { fetchPopularActors } from "../service/fetchPopularActors"
-import { handlePagination } from "../components/pagination"
 import { refs } from "../refs"
 
 
@@ -28,6 +27,8 @@ export const popularMovieMarkup = async (pageNumber) => {
 
     const resp = await fetchPopularMovieDay(pageNumber)
     
+    refs.popularFilmList.setAttribute('data-total', resp.data.total_pages);
+    refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
     console.log(resp)
 
 
@@ -48,50 +49,45 @@ export const popularMovieMarkup = async (pageNumber) => {
     
     }, '')
     
-    refs.popularFilmList.insertAdjacentHTML('beforeend', markup)
-
-    refs.popularFilmList.setAttribute('data-total', resp.data.total_pages);
-    refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
-
-    
+    refs.popularFilmList.insertAdjacentHTML('beforeend', markup)  
 }
 
 popularMovieMarkup(pageNumber)
 
 
 
-function createDefaultPagination(resp) {
+// function createDefaultPagination(resp) {
     
-        const defaultPaginationMarkup = `
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>1</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>2</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>3</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>4</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>5</span></button></li>
-        <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>${resp.data.total_pages}</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>-></span></button></li>
-    `
+//         const defaultPaginationMarkup = `
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>1</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>2</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>3</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>4</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>5</span></button></li>
+//         <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>${resp.data.total_pages}</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>-></span></button></li>
+//     `
 
-    refs.paginationList.insertAdjacentHTML('beforeend', defaultPaginationMarkup);
-}
+//     refs.paginationList.insertAdjacentHTML('beforeend', defaultPaginationMarkup);
+// }
 
 
-function dynamicPagination(resp) {
-     const paginationMarkup = `
-        <li class="pagination-list__item pagination-list__arrow-backward"><button type="button" class="pagination-list__button"><span><-</span></button></li>
-    <li class="pagination-list__item pagination-list__first"><button type="button" class="pagination-list__button"><span>1</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__prev-page">3</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__active-prev-page">4</span></button></li>
-        <li class="pagination-list__item "><button type="button" class="pagination-list__button"><span class="pagination-list__active-page">5</span></button></li>
-         <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__active-next-page">6</span></button></li>
-          <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__next-page">7</span></button></li>
-          <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>${resp.data.total_pages}</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>-></span></button></li>
-    `
+// function dynamicPagination(resp) {
+//      const paginationMarkup = `
+//         <li class="pagination-list__item pagination-list__arrow-backward"><button type="button" class="pagination-list__button"><span><-</span></button></li>
+//     <li class="pagination-list__item pagination-list__first"><button type="button" class="pagination-list__button"><span>1</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__prev-page">3</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__active-prev-page">4</span></button></li>
+//         <li class="pagination-list__item "><button type="button" class="pagination-list__button"><span class="pagination-list__active-page">5</span></button></li>
+//          <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__active-next-page">6</span></button></li>
+//           <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__next-page">7</span></button></li>
+//           <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>${resp.data.total_pages}</span></button></li>
+//     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>-></span></button></li>
+//     `
       
           
-         refs.paginationList.insertAdjacentHTML('beforeend', paginationMarkup);
-}
+//          refs.paginationList.insertAdjacentHTML('beforeend', paginationMarkup);
+// }
