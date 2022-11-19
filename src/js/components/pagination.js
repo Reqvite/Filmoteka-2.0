@@ -72,7 +72,7 @@ const createDefaultPagination = async () => {
     } else {
          
 
-        minLastPage = totalPage - 4;
+          minLastPage = totalPage - 3;
             
         paginationListTotalSpan.textContent = totalPage;
         if (pageNumber <= totalPage && pageNumber >= minLastPage) {
@@ -151,16 +151,19 @@ export const handlePagination = async (e) => {
 
 
     if (pageNumber >= 5) {
-  
-        if (pageNumber <= totalPage && pageNumber > minLastPage) {
+
+             minLastPage = totalPage - 3;
+
+        if (+pageNumber <= +totalPage && +pageNumber >= +minLastPage) {
         
             if (+pageNumber === +totalPage) {
-        
+           
                paginationListArrowForward.style.display = 'none'
            } else {
                paginationListArrowForward.style.display = 'block'
                 }
 
+            
             forwardDotsItem.style.display = 'block';
             forwardDotsSpan.textContent = totalPage - 1;
             paginationListnextPageItem.style.display = 'block';
@@ -187,6 +190,7 @@ export const handlePagination = async (e) => {
 
         } 
     } else {
+      
         backWardDotsSpan.textContent = 2;
         paginationListprevPageSpan.textContent = 3;
          paginationListActiveprevPageSpan.textContent = 4;
