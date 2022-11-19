@@ -6,73 +6,110 @@ import { fetchPopularMovieDay } from "../service/fetchPopularMovie";
 
         const paginationArrowBackwardItem = document.querySelector('.pagination-list__arrow-backward');
 
+                 const backWardDotsItem = document.querySelector('.pagination-list__backward-dots');
          const backWardDotsSpan = document.querySelector('.pagination-list__backward-dots-span');
          
+
+         const paginationListprevPageItem = document.querySelector('.pagination-list__prev-page-item');
            const paginationListprevPageSpan = document.querySelector('.pagination-list__prev-page');
 
-
+const paginationListActiveprevPageItem = document.querySelector('.pagination-list__active-prev-item');
         const paginationListActiveprevPageSpan = document.querySelector('.pagination-list__active-prev-page');
   
     const paginationListActivePageSpan = document.querySelector('.pagination-list__active-page');
         
+        const paginationListActivenextPageItem = document.querySelector('.pagination-list__active-next-item');
     const paginationListActivenextPageSpan = document.querySelector('.pagination-list__active-next-page');
         
     const paginationListnextPageItem = document.querySelector('.pagination-list__next-item');
         const paginationListnextPageSpan = document.querySelector('.pagination-list__next-page');
    
-const forwardDotsItem = document.querySelector('.pagination-list__forward-dots');
-              
+const forwardDotsItem = document.querySelector('.pagination-list__forward-dots');        
+const forwardDotsSpan = document.querySelector('.pagination-list__forward-dots-span');
+
 const paginationListTotalSpan = document.querySelector('.pagination-list__total-span');
     
 
 const paginationListArrowForward = document.querySelector('.pagination-list__arrow-forward');
 
-const  createDefaultPagination = async () => {
-        let pageNumber = localStorage.getItem("popularPage") || 1;
+
+
+let minLastPage;
+let totalPage;
+
+const createDefaultPagination = async () => {
+    let pageNumber = Number(localStorage.getItem("popularPage")) || 1;
+
     
-       const resp = await fetchPopularMovieDay(pageNumber)
+    const resp = await fetchPopularMovieDay(pageNumber)
     
-       let  totalPage = resp.data.total_pages
+    totalPage = Number(resp.data.total_pages)
         
   
-        if (pageNumber < 5) {
-            
-             if (pageNumber > 1) {
+    if (pageNumber > 1) {
 
-        paginationArrowBackwardItem.style.display ='block'
+        paginationArrowBackwardItem.style.display = 'block';
        
     } else {
-        paginationArrowBackwardItem.style.display ='none'
-            }
-            
-            backWardDotsSpan.textContent = '2';
-            paginationListActivenextPageSpan.textContent = '...';
+        paginationArrowBackwardItem.style.display = 'none'
+    }
+    
+    if (+pageNumber === +totalPage) {
+        paginationListArrowForward.style.display = 'none'
+    } else {
+        paginationListArrowForward.style.display = 'block'
+    }
+    
+    if (pageNumber < 5) {
+    
+        backWardDotsSpan.textContent = '2';
+        paginationListActivenextPageSpan.textContent = '...';
 
-            paginationListnextPageItem.style.display = 'none';
-            forwardDotsItem.style.display = 'none';
-            paginationListTotalSpan.textContent = totalPage;
+        paginationListnextPageItem.style.display = 'none';
+        forwardDotsItem.style.display = 'none';
+        paginationListTotalSpan.textContent = totalPage;
+
+    } else {
+         
+
+        minLastPage = totalPage - 4;
+            
+        paginationListTotalSpan.textContent = totalPage;
+        if (pageNumber <= totalPage && pageNumber >= minLastPage) {
+            if (pageNumber === totalPage) {
+                paginationListArrowForward.display = 'none'
+            } else {
+                paginationListArrowForward.display = 'block'
+            }
+                
+            forwardDotsSpan.textContent = totalPage - 1;
+            paginationListnextPageSpan.textContent = totalPage - 2;
+            paginationListActivenextPageSpan.textContent = totalPage - 3;
+            paginationListActivePageSpan.textContent = totalPage - 4;
+            paginationListprevPageItem.style.display = 'none';
+            paginationListActiveprevPageItem.style.display = 'none';
+
 
         } else {
-
-            // if (pageNumber === totalPage - 5 ) {
-            //     paginationListArrowForward.style.display = 'none';
-
-            // }
-
-
-
             backWardDotsSpan.textContent = '...';
             paginationListnextPageItem.style.display = 'block';
             forwardDotsItem.style.display = 'block';
-         paginationListprevPageSpan.textContent = +pageNumber - 2;
+            paginationListprevPageSpan.textContent = +pageNumber - 2;
             paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
-            paginationListActivePageSpan.textContent = pageNumber; 
+            paginationListActivePageSpan.textContent = pageNumber;
             paginationListActivenextPageSpan.textContent = +pageNumber + 1;
             paginationListnextPageSpan.textContent = +pageNumber + 2;
 
-            paginationListTotalSpan.textContent = totalPage;
+           
+        }
+    
     }
 
+     let allSpans = document.querySelectorAll('.pagination-list span');
+    const arrOfSpans = [...allSpans]
+   
+    arrOfSpans.find(el => el.textContent === String(pageNumber)).closest('button').classList.add('is-active')
+   
 
 }
 
@@ -81,9 +118,22 @@ createDefaultPagination()
 
 export const handlePagination = async (e) => {
     
-    let pageNumber = e.target.textContent;
+        let pageNumber = e.target.textContent;
+ 
+    if (e.target.closest('li').dataset.arrow) {
+        if (e.target.closest('li').dataset.arrow === 'forward') {
+            pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 1;
+        } else {
+             pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 1;
+        }
+    } 
+        
+   
+    if (+pageNumber === +refs.popularFilmList.getAttribute('data-currentPage')) {
+        return;
+    }
 
-    console.log(pageNumber)
+        refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
     localStorage.setItem('popularPage', pageNumber)
 
     refs.popularFilmList.innerHTML = '';
@@ -101,17 +151,41 @@ export const handlePagination = async (e) => {
 
 
     if (pageNumber >= 5) {
-          backWardDotsSpan.textContent = '...';
+  
+        if (pageNumber <= totalPage && pageNumber > minLastPage) {
+        
+            if (+pageNumber === +totalPage) {
+        
+               paginationListArrowForward.style.display = 'none'
+           } else {
+               paginationListArrowForward.style.display = 'block'
+                }
+
+            forwardDotsItem.style.display = 'block';
+            forwardDotsSpan.textContent = totalPage - 1;
+            paginationListnextPageItem.style.display = 'block';
+            paginationListnextPageSpan.textContent = totalPage - 2;
+            paginationListActivenextPageSpan.textContent = totalPage - 3;
+            paginationListActivePageSpan.textContent = totalPage - 4;
+            paginationListprevPageItem.style.display = 'none';
+            paginationListActiveprevPageItem.style.display = 'none';
+            backWardDotsItem.display = 'none'
+            backWardDotsSpan.textContent = '...'
+
+        } else {
+                      backWardDotsSpan.textContent = '...';
             paginationListnextPageItem.style.display = 'block';
             forwardDotsItem.style.display = 'block';
+            paginationListprevPageItem.style.display = 'block';
+            paginationListActiveprevPageItem.style.display = 'block';
          paginationListprevPageSpan.textContent = +pageNumber - 2;
             paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
             paginationListActivePageSpan.textContent = pageNumber; 
             paginationListActivenextPageSpan.textContent = +pageNumber + 1;
             paginationListnextPageSpan.textContent = +pageNumber + 2;
+            forwardDotsSpan.textContent = '...'
 
-
-    
+        } 
     } else {
         backWardDotsSpan.textContent = 2;
         paginationListprevPageSpan.textContent = 3;
@@ -120,10 +194,22 @@ export const handlePagination = async (e) => {
             paginationListActivenextPageSpan.textContent = '...';
 
             paginationListnextPageItem.style.display = 'none';
-            forwardDotsItem.style.display = 'none';
+        forwardDotsItem.style.display = 'none';
+        
+        paginationListArrowForward.style.display = 'block';
+                paginationListprevPageItem.style.display = 'block';
+                paginationListActiveprevPageItem.style.display = 'block';
         }
    
-    
+    let allSpans = document.querySelectorAll('.pagination-list span');
+    let allButtons = document.querySelectorAll('.pagination-list__button');
+
+    const arrOfSpans = [...allSpans]
+    const arrOfButtons = [...allButtons]
+   
+
+    arrOfButtons.find(el => el.classList.contains('is-active')).classList.remove('is-active')
+    arrOfSpans.find(el => el.textContent === String(pageNumber)).closest('button').classList.add('is-active')
 }
 
 
