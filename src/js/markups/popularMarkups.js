@@ -22,7 +22,7 @@ export const popularMovieMarkupSlider = async () => {
 popularMovieMarkupSlider()
 
 //Page open Markup popularFilms
-let pageNumber = localStorage.getItem("popularPage");
+let pageNumber = localStorage.getItem("popularPage") || 1;
 
 export const popularMovieMarkup = async (pageNumber) => {
 
@@ -50,16 +50,10 @@ export const popularMovieMarkup = async (pageNumber) => {
     
     refs.popularFilmList.insertAdjacentHTML('beforeend', markup)
 
-          
-    if (pageNumber < 5) {
-        if (refs.paginationList.children.length === 0) {
-           createDefaultPagination(resp) 
-        }
-        if (refs.paginationList.children.length === 11 || refs.paginationList.children.length === 10) {
-            refs.paginationList.innerHTML = '';
-           createDefaultPagination(resp) 
-        }
-    }    
+    refs.popularFilmList.setAttribute('data-total', resp.data.total_pages);
+    refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
+
+    
 }
 
 popularMovieMarkup(pageNumber)
@@ -86,7 +80,7 @@ function createDefaultPagination(resp) {
 function dynamicPagination(resp) {
      const paginationMarkup = `
         <li class="pagination-list__item pagination-list__arrow-backward"><button type="button" class="pagination-list__button"><span><-</span></button></li>
-    <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>1</span></button></li>
+    <li class="pagination-list__item pagination-list__first"><button type="button" class="pagination-list__button"><span>1</span></button></li>
     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span>...</span></button></li>
     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__prev-page">3</span></button></li>
     <li class="pagination-list__item"><button type="button" class="pagination-list__button"><span class="pagination-list__active-prev-page">4</span></button></li>
