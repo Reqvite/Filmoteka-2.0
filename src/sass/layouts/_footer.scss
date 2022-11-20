@@ -2,9 +2,8 @@ footer {
   background-color: rgb(255, 255, 255);
 }
 .footer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 83px;
-}
-
-.footer-box__text {
-  text-align: center;
 }

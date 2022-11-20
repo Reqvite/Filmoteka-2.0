@@ -1,5 +1,5 @@
 //markups
-
+import './js/service/registration'
 import './js/markups/popularMarkups'
 
 
@@ -13,3 +13,5 @@ import './js/components/openModal'
 import './js/markups/modalDetailsMarkup'
 
 import './js/components/pagination'
+
+import './js/components/headerNavbar'

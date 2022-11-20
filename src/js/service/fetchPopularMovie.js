@@ -1,5 +1,9 @@
 import axios from "axios"
 
+
+let language = localStorage.getItem('language');
+
+
 const API_KEY = 'e145377b3a98d62607e7dc90339d279b'
 
  export const fetchPopularMovieWeek = async () => {
@@ -8,5 +12,5 @@ const API_KEY = 'e145377b3a98d62607e7dc90339d279b'
 
 export const fetchPopularMovieDay = async (page) => {
     
-    return await axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=e145377b3a98d62607e7dc90339d279b&page=${page || 1}`)
+    return await axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=e145377b3a98d62607e7dc90339d279b&language=${language}&page=${page || 1}`)
 }

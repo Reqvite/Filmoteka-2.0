@@ -1,37 +1,44 @@
-<header class="header">
-  <a href="" class="link logo"></a>
-  <form class="header__form">
-    <button type="button" class="btn header__search-more">All</button>
-    <input
-      type="text"
-      class="header__input"
-      name="search"
-      placeholder="Movie search"
-    />
-    <button type="submit" class="btn header__submit-btn">
-      submit
-      <svg class="header__icon" width="24" height="24">
-        <use></use>
-      </svg>
-    </button>
+<header>
+  <div class="container header">
+    <a href="" class="link logo"></a>
+    <form class="header__form">
+      <button type="button" class="btn header__search-more">All</button>
+      <input
+        type="text"
+        class="header__input"
+        name="search"
+        placeholder="Movie search"
+      />
+      <button type="submit" class="btn header__submit-btn">
+        submit
+        <svg class="header__icon" width="24" height="24">
+          <use></use>
+        </svg>
+      </button>
+    </form>
     <nav class="navbar">
       <ul class="list navbar__list">
-        <li class="navbar__item">
+        <li class="navbar__item navbar__item-watchlist" style="display: none">
           <button type="button" class="navbar__btn">Watchlist</button>
         </li>
-        <li class="navbar__item">
+        <li class="navbar__item navbar__item-sign-in">
           <button type="button" class="navbar__btn">Sign in</button>
         </li>
-        <li class="navbar__item">
-          <button type="button" class="navbar__btn"></button>
+        <li class="navbar__item navbar__item-log-out" style="display: none">
+          <button type="button" class="navbar__btn">Log out</button>
         </li>
-        <li class="navbar__item">
-          <button type="button" class="navbar__btn"></button>
+        <li class="navbar__item navbar__item-account" style="display: none">
+          <button type="button" class="navbar__btn">Account</button>
         </li>
-        <li class="navbar__item">
-          <button type="button" class="navbar__btn"></button>
+        <li class="navbar__item navbar__item-language">
+          <button type="button" class="navbar__btn navbar__btn-language">
+            En
+          </button>
+          <ul class="list language-list">
+            <li class="language-list__item">Ukraine</li>
+          </ul>
         </li>
       </ul>
     </nav>
-  </form>
+  </div>
 </header>

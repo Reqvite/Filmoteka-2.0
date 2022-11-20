@@ -1,0 +1,49 @@
+<div class="registration-backdrop is-hidden">
+  <div class="registration-modal">
+    <p class="registration-box__title">Welcome Onboard</p>
+    <form class="registration-form">
+      <input
+        class="registration-form__name input"
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Enter your full name"
+        type="text"
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        style="display: none"
+      />
+      <input
+        class="registration-form__email input"
+        type="text"
+        name="email"
+        placeholder="Enter your e-mail"
+        autocomplete="username"
+      />
+      <input
+        class="registration-form__password input"
+        type="password"
+        name="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      />
+      <a href="" class="link registration-form__forgot-password">
+        Забули пароль?</a
+      >
+      <input
+        class="registration-form__submit-btn"
+        type="submit"
+        id="signIn"
+        name="signIn"
+        value="Log in"
+      />
+    </form>
+    <div class="registration-box__bottom">
+      <p class="registration-box__not-registered">Немає облікового запису?</p>
+      <a href="" class="link registration-box__link-registration"
+        >Зареєструватись</a
+      >
+    </div>
+  </div>
+</div>
