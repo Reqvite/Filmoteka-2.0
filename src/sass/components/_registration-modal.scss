@@ -11,7 +11,12 @@
     opacity: 0;
     pointer-events: none;
   }
+  &.is-hidden .registration-modal {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
 }
+
 .registration-modal {
   overflow-y: scroll;
   padding: 40px;
@@ -20,16 +25,21 @@
   height: 100vh;
   background-color: white;
 
+  opacity: 1;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
+
+  transition: transform 250ms cubic-bezier(0.075, 0.82, 0.165, 1),
+    opacity 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
   @include tablet {
     overflow-y: hidden;
     height: auto;
   }
 }
+
 .registration-box__title {
 }
 .registration-form {

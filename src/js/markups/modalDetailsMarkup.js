@@ -1,7 +1,10 @@
+import img from '../../images/errorImgs/csaff-no-poster.jpg';
+
 import { refs } from "../refs"
 
 import { fetchPopularActors } from "../service/fetchPopularActors";
 import { fetchFilmDetails } from "../service/fetchFilmDetails";
+import { title } from 'process';
 
 export const actorDetailsMarkup = async (id) => {
     const resp = await fetchPopularActors();
@@ -9,11 +12,18 @@ export const actorDetailsMarkup = async (id) => {
     const { profile_path, name, known_for } = resp.data.results.filter((el) => el.id === Number(id))[0];
 
 
-    const actorFilmsListMarkup = known_for.reduce((acc, {poster_path, original_title, id}) => {
+  const actorFilmsListMarkup = known_for.reduce((acc, { poster_path, original_title, original_name, id }) => {
+      
+      poster_path
+    ? (poster_path = `https://www.themoviedb.org/t/p/w500/${poster_path}`)
+    : (poster_path = img);
+
+
 
        return acc + `<li class="actor-films-list__item" data-name="film" data-id="${id}">
-        <img class="actor-films-list__img" src="https://www.themoviedb.org/t/p/w500/${poster_path}" alt="${original_title}">
-        <p class="actor-films-list__title">${original_title}</p>
+        <img class="actor-films-list__img" src="${poster_path}"  width="150" height="255" alt="${original_title || original_name 
+}">
+        <p class="actor-films-list__title">${original_title || original_name}</p>
         </li>`
     },'')
 
@@ -29,7 +39,7 @@ export const actorDetailsMarkup = async (id) => {
    
     
     refs.modal.insertAdjacentHTML("afterbegin", markup)
-
+       refs.backdropModal.classList.remove('is-hidden')
 }
 
 
@@ -53,7 +63,7 @@ export const createFilmDetailsMarkup = async (idFilm) => {
 
   poster_path
     ? (poster_path = `https://www.themoviedb.org/t/p/w500/${poster_path}`)
-    : (poster_path = 'none');
+    : (poster_path = img);
   vote_average
     ? (vote_average = vote_average.toFixed(1))
     : (vote_average = '?');
@@ -110,7 +120,8 @@ export const createFilmDetailsMarkup = async (idFilm) => {
     }
     else {
            refs.modal.insertAdjacentHTML("afterbegin", markup)
-    }
+  }
+     refs.backdropModal.classList.remove('is-hidden')
 }
     
 

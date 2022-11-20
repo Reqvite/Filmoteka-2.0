@@ -26,8 +26,6 @@ function openModal(e) {
         document.addEventListener('keydown', checkModalKey )
             
         
-        refs.backdropModal.classList.remove('is-hidden')
-
         if (e.target.closest('li').dataset.name === 'actor') {
             actorDetailsMarkup(id);
         }

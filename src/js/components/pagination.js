@@ -127,6 +127,18 @@ export const handlePagination = async (e) => {
              pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 1;
         }
     } 
+
+    if (e.target.closest('li').dataset.dots) {
+        if (e.target.closest('li').dataset.dots === 'forward') {
+            pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 5;
+        } else {
+            if (+refs.popularFilmList.getAttribute('data-currentPage') === 5) {
+               pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 4;
+            } else {
+                pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 5;
+            }         
+        }
+    } 
         
    
     if (+pageNumber === +refs.popularFilmList.getAttribute('data-currentPage')) {

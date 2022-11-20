@@ -1,3 +1,5 @@
+import img from '../../images/errorImgs/csaff-no-poster.jpg';
+
 import { fetchPopularMovieDay } from "../service/fetchPopularMovie"
 import { fetchPopularActors } from "../service/fetchPopularActors"
 import { refs } from "../refs"
@@ -14,7 +16,6 @@ export const popularMovieMarkupSlider = async () => {
     }, '')
     
     refs.mainSliderList.insertAdjacentHTML('beforeend', markup)
-
 }
 
 
@@ -34,7 +35,7 @@ export const popularMovieMarkup = async (pageNumber) => {
 
     poster_path
     ? (poster_path = `https://www.themoviedb.org/t/p/w500/${poster_path}`)
-    : (poster_path = 'none');
+    : (poster_path = img);
 
           refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
         
@@ -53,7 +54,7 @@ export const popularMovieMarkup = async (pageNumber) => {
     
     }, '')
     
-    refs.popularFilmList.insertAdjacentHTML('beforeend', markup)  
+  refs.popularFilmList.insertAdjacentHTML('beforeend', markup)  
 }
 
 popularMovieMarkup(pageNumber)
