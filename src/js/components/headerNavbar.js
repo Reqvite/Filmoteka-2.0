@@ -36,10 +36,10 @@ function checkMouseLeave(e) {
 function handleLanguageList(e) {
     if (e.target.textContent === 'Ukraine') {
         localStorage.setItem('language', 'uk-ua');
-        window.location.href = '/';
+        window.location.reload() 
     } 
     if(e.target.textContent === 'English') {
         localStorage.setItem('language', 'en-Us');
-        window.location.href = '/';
+        window.location.reload() 
     }
 }
