@@ -112,20 +112,6 @@
   @include tablet {
     flex-direction: row;
   }
-
-  @media screen and (max-width: 767.98px) {
-    width: 95vw;
-    max-width: 380px;
-    height: 95vh;
-  }
-
-  @include tablet {
-    width: 704px;
-  }
-
-  @include desktop {
-    width: 804px;
-  }
 }
 
 .modal-img {
@@ -133,19 +119,28 @@
   height: 478px;
   object-fit: cover;
   object-position: cover;
+
+  @include tablet {
+    width: 264px;
+    height: 357px;
+  }
+
+  @include desktop {
+    width: 340px;
+    height: 478px;
+  }
 }
 
 .film-details {
-  max-width: 382px;
   @media screen and (max-width: 767.98px) {
     margin-top: 20px;
   }
   @include tablet {
     width: 50%;
-    margin-left: 68px;
+    margin-left: auto;
   }
   @include desktop {
-    margin-left: 16px;
+    margin-left: auto;
   }
 }
 
