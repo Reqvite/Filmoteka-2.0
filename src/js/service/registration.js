@@ -44,7 +44,7 @@ function handleRegistration(e) {
     refs.registrationForm.removeEventListener('submit', logInUser);
     refs.registrationForm.addEventListener('submit', signUpUser);
     refs.notRegisteredText.style.display = 'none'    
-    refs.nameInput.style.display = 'block'
+    refs.nameInput.style.display = 'flex'
     refs.forgotPasswordLink.style.display = 'none'
         refs.clickRegistrationBtn.textContent = 'Log in'
         refs.submitBtn.value = 'Sign in'

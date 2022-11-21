@@ -1,12 +1,17 @@
-import Swiper, {Autoplay} from 'swiper';
+import Swiper, {Autoplay , Navigation} from 'swiper';
   // import Swiper and modules styles
 
 
   // init Swiper:
 const swiper = new Swiper('.swiper', {
   // Optional parameters
-    modules: [Autoplay],
+    modules: [Autoplay, Navigation],
 
+   navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+   
     slidesPerView: 1,
     spaceBetween: 10,
 

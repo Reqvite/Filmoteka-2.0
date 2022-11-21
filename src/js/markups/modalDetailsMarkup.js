@@ -110,18 +110,33 @@ export const createFilmDetailsMarkup = async (idFilm) => {
 	</div>
 </div>`;
 
+
+
+  if (refs.modal.children.length === 1) {
+
+    refs.modal.insertAdjacentHTML("beforeend", markup) 
+        
+    const filmModalContainer = document.querySelector('.modal-container-film')
     
-    if (refs.modal.children.length === 1) {
-       refs.modal.insertAdjacentHTML("beforeend", markup) 
-    } else if (refs.modal.children.length >= 2) {
+    filmModalContainer.style.marginTop = '20px'
+    
+  } else if (refs.modal.children.length >= 2) {
+
         let filmContainer = document.querySelector('.modal-container-film')   
         filmContainer.remove();
-       refs.modal.insertAdjacentHTML("beforeend", markup) 
-    }
-    else {
+      refs.modal.insertAdjacentHTML("beforeend", markup) 
+        
+     const filmModalContainer = document.querySelector('.modal-container-film')
+    
+    filmModalContainer.style.marginTop = '20px'
+  }
+    
+  else {
+    
            refs.modal.insertAdjacentHTML("afterbegin", markup)
   }
-     refs.backdropModal.classList.remove('is-hidden')
+
+  refs.backdropModal.classList.remove('is-hidden')
 }
     
 

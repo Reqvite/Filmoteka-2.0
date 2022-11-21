@@ -16,6 +16,10 @@ function openModal(e) {
     if (e.target.classList.contains('backdrop') || e.target.classList.contains('registration-backdrop')) {
         closeModal() 
     }
+
+    if (e.target?.closest('svg')?.classList.contains('modal-close')) {
+        closeModal() 
+    }
     
     let id = e.target?.closest('li')?.dataset.id
 

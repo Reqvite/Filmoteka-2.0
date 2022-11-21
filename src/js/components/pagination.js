@@ -128,7 +128,7 @@ export const handlePagination = async (e) => {
         }
     } 
 
-    if (e.target.closest('li').dataset.dots) {
+    if (e.target.closest('li').dataset.dots && e.target.textContent === '...') {
         if (e.target.closest('li').dataset.dots === 'forward') {
             pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 5;
         } else {

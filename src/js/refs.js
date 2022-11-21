@@ -21,7 +21,7 @@ export const refs = {
     
     //modal
     backdropModal: document.querySelector('.backdrop'),
-    modal: document.querySelector('.modal'),
+    modal: document.querySelector('.modal-content'),
 
     //pagination
     paginationList: document.querySelector('.pagination-list'),
@@ -32,7 +32,7 @@ export const refs = {
     //registration
     registrationForm: document.querySelector('.registration-form'),
     clickRegistrationBtn: document.querySelector('.registration-box__link-registration'),
-    nameInput: document.querySelector('.registration-form__name'),
+    nameInput: document.querySelector('.registration-form__name-label'),
     notRegisteredText: document.querySelector('.registration-box__not-registered'),
     forgotPasswordLink : document.querySelector('.registration-form__forgot-password'),
     submitBtn: document.querySelector('.registration-form__submit-btn'),

@@ -1,35 +1,50 @@
 <div class="registration-backdrop is-hidden">
   <div class="registration-modal">
-    <p class="registration-box__title">Welcome Onboard</p>
+    <svg class="modal-close" width="20" height="20">
+      <use href="/src/images/sprite.svg#icon-cross"></use>
+    </svg>
+    <p class="registration-box__title">Sign In to Filmoteka</p>
     <form class="registration-form">
-      <input
-        class="registration-form__name input"
-        type="text"
-        id="username"
-        name="username"
-        placeholder="Enter your full name"
-        type="text"
-        name="name"
-        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+      <label
+        for="username"
+        class="registration-form__name-label"
         style="display: none"
-      />
-      <input
-        class="registration-form__email input"
-        type="text"
-        name="email"
-        placeholder="Enter your e-mail"
-        autocomplete="username"
-      />
-      <input
-        class="registration-form__password input"
-        type="password"
-        name="password"
-        placeholder="Password"
-        autocomplete="current-password"
-      />
+      >
+        Name
+        <input
+          class="registration-form__name input"
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your full name"
+          type="text"
+          name="name"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        />
+      </label>
+      <label for="email">
+        Email Address
+        <input
+          class="registration-form__email input"
+          type="text"
+          name="email"
+          placeholder="Enter your e-mail"
+          autocomplete="username"
+        />
+      </label>
+      <label for="Password">
+        Password
+        <input
+          class="registration-form__password input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          autocomplete="current-password"
+        />
+      </label>
       <a href="" class="link registration-form__forgot-password">
-        Забули пароль?</a
+        Forgot your password?</a
       >
       <input
         class="registration-form__submit-btn"
@@ -40,10 +55,8 @@
       />
     </form>
     <div class="registration-box__bottom">
-      <p class="registration-box__not-registered">Немає облікового запису?</p>
-      <a href="" class="link registration-box__link-registration"
-        >Зареєструватись</a
-      >
+      <p class="registration-box__not-registered">Don't have an account?</p>
+      <a href="" class="link registration-box__link-registration">Sign Up</a>
     </div>
   </div>
 </div>
