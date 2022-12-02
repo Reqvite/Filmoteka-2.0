@@ -4,7 +4,6 @@ import { refs } from "../refs"
 
 import { fetchPopularActors } from "../service/fetchPopularActors";
 import { fetchFilmDetails } from "../service/fetchFilmDetails";
-import { title } from 'process';
 
 export const actorDetailsMarkup = async (id) => {
     const resp = await fetchPopularActors();

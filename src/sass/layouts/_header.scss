@@ -15,6 +15,7 @@ header {
 .header__form {
   position: relative;
   display: flex;
+  margin-left: auto;
 }
 
 .header__search-more {
@@ -28,8 +29,12 @@ header {
   background-color: transparent;
 }
 .header__input {
+  outline: $accentColor;
+  border: none;
   max-width: 634px;
   height: 36px;
+  border-radius: 8px;
+  padding-left: 30px;
   &::placeholder {
     padding-left: 5%;
   }
@@ -37,13 +42,18 @@ header {
   @include desktop {
     width: 600px;
   }
+
+  &::placeholder {
+    padding-left: 0;
+  }
 }
 
 .header__submit-btn {
   position: absolute;
-  right: 194px;
+  right: 0;
   height: 100%;
 
+  cursor: pointer;
   border-style: none;
   background-color: transparent;
 }

@@ -19,7 +19,7 @@ function handleNavbarClick(e) {
     refs.languageBtn.addEventListener('mouseleave', checkMouseLeave)
     refs.languageList.addEventListener('click', handleLanguageList)
 
-    if (e.target.closest('li').classList.contains('navbar__item-language')) {
+    if (e.target.closest('li').classList.contains('navbar__item-language') && e.target.nodeName !== 'UL') {
         refs.languageList.classList.toggle('active')
     }
  
@@ -27,7 +27,8 @@ function handleNavbarClick(e) {
 
 
 function checkMouseLeave(e) {
-     if (e.target.nodeName) {
+         
+    if (e.target.nodeName) {
          refs.languageList.classList.toggle('active')
          refs.languageBtn.removeEventListener('mouseleave', checkMouseLeave)
         }

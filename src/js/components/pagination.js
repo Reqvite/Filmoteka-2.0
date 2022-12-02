@@ -4,25 +4,27 @@ import { popularMovieMarkup } from "../markups/popularMarkups";
 
 import { fetchPopularMovieDay } from "../service/fetchPopularMovie";
 
-        const paginationArrowBackwardItem = document.querySelector('.pagination-list__arrow-backward');
+import { queryMovieMarkup } from "../markups/searchQueryMarkup";
 
-                 const backWardDotsItem = document.querySelector('.pagination-list__backward-dots');
-         const backWardDotsSpan = document.querySelector('.pagination-list__backward-dots-span');
+const paginationArrowBackwardItem = document.querySelector('.pagination-list__arrow-backward');
+
+const backWardDotsItem = document.querySelector('.pagination-list__backward-dots');
+const backWardDotsSpan = document.querySelector('.pagination-list__backward-dots-span');
          
 
-         const paginationListprevPageItem = document.querySelector('.pagination-list__prev-page-item');
-           const paginationListprevPageSpan = document.querySelector('.pagination-list__prev-page');
+const paginationListprevPageItem = document.querySelector('.pagination-list__prev-page-item');
+const paginationListprevPageSpan = document.querySelector('.pagination-list__prev-page');
 
 const paginationListActiveprevPageItem = document.querySelector('.pagination-list__active-prev-item');
-        const paginationListActiveprevPageSpan = document.querySelector('.pagination-list__active-prev-page');
+const paginationListActiveprevPageSpan = document.querySelector('.pagination-list__active-prev-page');
   
-    const paginationListActivePageSpan = document.querySelector('.pagination-list__active-page');
+const paginationListActivePageSpan = document.querySelector('.pagination-list__active-page');
         
-        const paginationListActivenextPageItem = document.querySelector('.pagination-list__active-next-item');
-    const paginationListActivenextPageSpan = document.querySelector('.pagination-list__active-next-page');
+const paginationListActivenextPageItem = document.querySelector('.pagination-list__active-next-item');
+const paginationListActivenextPageSpan = document.querySelector('.pagination-list__active-next-page');
         
-    const paginationListnextPageItem = document.querySelector('.pagination-list__next-item');
-        const paginationListnextPageSpan = document.querySelector('.pagination-list__next-page');
+const paginationListnextPageItem = document.querySelector('.pagination-list__next-item');
+const paginationListnextPageSpan = document.querySelector('.pagination-list__next-page');
    
 const forwardDotsItem = document.querySelector('.pagination-list__forward-dots');        
 const forwardDotsSpan = document.querySelector('.pagination-list__forward-dots-span');
@@ -32,19 +34,30 @@ const paginationListTotalSpan = document.querySelector('.pagination-list__total-
 
 const paginationListArrowForward = document.querySelector('.pagination-list__arrow-forward');
 
-
-
 let minLastPage;
 let totalPage;
 
-const createDefaultPagination = async () => {
+let query = null
+
+export const createDefaultPagination = async (filmName,pages) => {
     let pageNumber = Number(localStorage.getItem("popularPage")) || 1;
 
-    
-    const resp = await fetchPopularMovieDay(pageNumber)
-    
-    totalPage = Number(resp.data.total_pages)
+    if (pages) {
+        totalPage = Number(pages);
+        query = filmName;
+        pageNumber = 1;
+
+     let allButtons = document.querySelectorAll('.pagination-list__button');
+
+    const arrOfButtons = [...allButtons]
+   
+        arrOfButtons.find(el => el.classList.contains('is-active')).classList.remove('is-active')
         
+    } else {
+     const resp = await fetchPopularMovieDay(pageNumber)
+    totalPage = Number(resp.data.total_pages) 
+    }
+
   
     if (pageNumber > 1) {
 
@@ -105,9 +118,10 @@ const createDefaultPagination = async () => {
     
     }
 
-     let allSpans = document.querySelectorAll('.pagination-list span');
-    const arrOfSpans = [...allSpans]
-   
+    let allSpans = document.querySelectorAll('.pagination-list span');
+
+     const arrOfSpans = [...allSpans]
+
     arrOfSpans.find(el => el.textContent === String(pageNumber)).closest('button').classList.add('is-active')
    
 
@@ -150,7 +164,11 @@ export const handlePagination = async (e) => {
 
     refs.popularFilmList.innerHTML = '';
 
-    popularMovieMarkup(pageNumber)
+    if (query) {
+        queryMovieMarkup(query, pageNumber)
+    } else {
+      popularMovieMarkup(pageNumber)   
+    }
 
 
     if (pageNumber > 1) {

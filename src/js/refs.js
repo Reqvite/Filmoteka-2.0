@@ -6,6 +6,7 @@ export const refs = {
     watchListBtn: document.querySelector('.navbar__item-watchlist'),
     signInBtn: document.querySelector('.navbar__item-sign-in'),
     accountBtn: document.querySelector('.navbar__item-account'),
+    searchForm: document.querySelector('.header__form'),
     
 
     languageBtn: document.querySelector('.navbar__item-language'),
