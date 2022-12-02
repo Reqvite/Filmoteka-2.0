@@ -43,7 +43,10 @@ let query = null
 
 export const createDefaultPagination = async (filmName,pages) => {
     let pageNumber = Number(localStorage.getItem("popularPage")) || 1;
-
+    [...refs.paginationList.children].forEach(el => {
+        el.style.display = 'block';
+    })
+    
     if (pages) {
         totalPage = Number(pages);
         query = filmName;
@@ -71,20 +74,11 @@ export const createDefaultPagination = async (filmName,pages) => {
             .filter(el => !el.outerHTML.includes('style="display: none;'))
             .reverse()
            
-    //     let length = filterBtns.length
-    //     let counter;
-
-    //     filterBtns.forEach(el => {
-
-    //          if (counter === length) {
-    //                 console.log('ready')
-    //          } else {
-    //             el.style.display = 'none' 
-    //             }
-    //          counter += 1
-    //          console.log(counter)
-    // })
-    // }
+        while (filterBtns.length !== totalPage) {
+            filterBtns[0].style.display = 'none'
+            filterBtns.splice(0,1)
+        }
+    }
   
     if (pageNumber > 1) {
 
