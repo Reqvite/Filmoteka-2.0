@@ -29,6 +29,8 @@ const paginationListnextPageSpan = document.querySelector('.pagination-list__nex
 const forwardDotsItem = document.querySelector('.pagination-list__forward-dots');        
 const forwardDotsSpan = document.querySelector('.pagination-list__forward-dots-span');
 
+const forwardDotsNextItem = document.querySelector('.pagination-list__forward-dots-next');
+
 const paginationListTotalSpan = document.querySelector('.pagination-list__total-span');
     
 
@@ -58,6 +60,31 @@ export const createDefaultPagination = async (filmName,pages) => {
     totalPage = Number(resp.data.total_pages) 
     }
 
+    console.log(totalPage)
+    if (totalPage < 5) {
+        paginationArrowBackwardItem.style.display = 'none'
+        paginationListArrowForward.style.display = 'none'
+        paginationListActivenextPageItem.style.display = 'none'
+        forwardDotsNextItem.style.display = 'none'
+
+        const filterBtns = [...refs.paginationList.children]
+            .filter(el => !el.outerHTML.includes('style="display: none;'))
+            .reverse()
+           
+    //     let length = filterBtns.length
+    //     let counter;
+
+    //     filterBtns.forEach(el => {
+
+    //          if (counter === length) {
+    //                 console.log('ready')
+    //          } else {
+    //             el.style.display = 'none' 
+    //             }
+    //          counter += 1
+    //          console.log(counter)
+    // })
+    // }
   
     if (pageNumber > 1) {
 
