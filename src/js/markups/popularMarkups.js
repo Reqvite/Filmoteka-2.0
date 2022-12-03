@@ -1,5 +1,7 @@
 import img from '../../images/errorImgs/csaff-no-poster.jpg';
 
+import imgActor from '../../images/errorImgs/MrWho_400x400.png';
+
 import { fetchPopularMovieDay } from "../service/fetchPopularMovie"
 import { fetchPopularActors } from "../service/fetchPopularActors"
 import { refs } from "../refs"
@@ -7,11 +9,17 @@ import { refs } from "../refs"
 
 
 export const popularMovieMarkupSlider = async () => {
-    const resp = await fetchPopularActors()
+  const resp = await fetchPopularActors()
+  
+ 
 
-   const markup = resp.data.results.reduce((acc, { profile_path, name, id }) => {
+  const markup = resp.data.results.reduce((acc, { profile_path, name, id }) => {
+     
+         profile_path
+    ? (profile_path = `https://www.themoviedb.org/t/p/w500/${profile_path}`)
+    : (profile_path = imgActor);
        
-        return acc + `<li class="swiper-slide" data-name="actor" data-id="${id}"><img class="main-slider__img" src="https://www.themoviedb.org/t/p/w500/${profile_path}" alt="${name}"></li>`
+        return acc + `<li class="swiper-slide" data-name="actor" data-id="${id}"><img class="main-slider__img" src=${profile_path} alt="${name}"><div class="main-slider__actor-box"><p class="main-slider__actor-name">${name}</p></div></li>`
         
     }, '')
     

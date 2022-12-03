@@ -2,7 +2,7 @@ import { refs } from "../refs";
 
  import {actorDetailsMarkup, createFilmDetailsMarkup} from '../markups/modalDetailsMarkup.js'
 
-//detailsModal
+
 refs.body.addEventListener('click', openModal)
 
 function openModal(e) {
@@ -61,7 +61,7 @@ function closeModal() {
 }
 
 
-//registrationModal
+
 
 function openRegistrationModal() {
     refs.registationModal.classList.toggle('is-hidden')

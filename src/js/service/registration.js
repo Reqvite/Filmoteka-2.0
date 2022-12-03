@@ -38,7 +38,7 @@ function handleRegistration(e) {
          refs.notRegisteredText.style.display = 'block'    
         refs.nameInput.style.display = 'none'
         refs.forgotPasswordLink.style.display = 'block'
-        refs.clickRegistrationBtn.textContent = 'Зареєструватись'
+        refs.clickRegistrationBtn.textContent = 'Sign in'
         refs.submitBtn.value = 'Log in'
     } else {
     refs.registrationForm.removeEventListener('submit', logInUser);

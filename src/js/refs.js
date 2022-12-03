@@ -17,8 +17,11 @@ export const refs = {
     //main section
     mainContainer: document.querySelector('main'),
 
+    sliderWrapper: document.querySelector('.slider-main'),
     mainSliderList: document.querySelector('.swiper-wrapper'),
     popularFilmList: document.querySelector('.popular-list'),
+
+    titleMain: document.querySelector('.popular-box__title'),
     
     //modal
     backdropModal: document.querySelector('.backdrop'),

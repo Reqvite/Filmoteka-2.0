@@ -48,6 +48,7 @@ export const createDefaultPagination = async (filmName,pages) => {
     })
     
     if (pages) {
+        hideHomePage()
         totalPage = Number(pages);
         query = filmName;
         pageNumber = 1;
@@ -59,11 +60,11 @@ export const createDefaultPagination = async (filmName,pages) => {
         arrOfButtons.find(el => el.classList.contains('is-active')).classList.remove('is-active')
         
     } else {
+        showHome()
      const resp = await fetchPopularMovieDay(pageNumber)
     totalPage = Number(resp.data.total_pages) 
     }
 
-    console.log(totalPage)
     if (totalPage < 5) {
         paginationArrowBackwardItem.style.display = 'none'
         paginationListArrowForward.style.display = 'none'
@@ -87,12 +88,17 @@ export const createDefaultPagination = async (filmName,pages) => {
     } else {
         paginationArrowBackwardItem.style.display = 'none'
     }
-    
+
+ 
     if (+pageNumber === +totalPage) {
         paginationListArrowForward.style.display = 'none'
     } else {
         paginationListArrowForward.style.display = 'block'
     }
+
+      if (totalPage <= 5 && pages) {
+        paginationListArrowForward.style.display = 'none'; 
+        }
     
     if (pageNumber < 5) {
     
@@ -102,6 +108,7 @@ export const createDefaultPagination = async (filmName,pages) => {
         paginationListnextPageItem.style.display = 'none';
         forwardDotsItem.style.display = 'none';
         paginationListTotalSpan.textContent = totalPage;
+
 
     } else {
          
@@ -192,7 +199,10 @@ export const handlePagination = async (e) => {
     }
 
 
-    if (pageNumber > 1) {
+    if (totalPage <= 5) {
+        
+    } else {
+        if (pageNumber > 1) {
 
         paginationArrowBackwardItem.style.display ='block'
        
@@ -254,7 +264,9 @@ export const handlePagination = async (e) => {
         paginationListArrowForward.style.display = 'block';
                 paginationListprevPageItem.style.display = 'block';
                 paginationListActiveprevPageItem.style.display = 'block';
-        }
+        } 
+    }
+   
    
     let allSpans = document.querySelectorAll('.pagination-list span');
     let allButtons = document.querySelectorAll('.pagination-list__button');
@@ -270,3 +282,13 @@ export const handlePagination = async (e) => {
 
 refs.paginationList.addEventListener('click', handlePagination)
 
+
+function hideHomePage() {
+    refs.titleMain.style.display = 'none';
+    refs.sliderWrapper.style.display = 'none';
+}
+
+function showHome() {
+    refs.titleMain.style.display = 'block';
+    refs.sliderWrapper.style.display = 'block';
+}

@@ -7,6 +7,11 @@
 .swiper-wrapper {
   margin-top: 20px;
 }
+
+.swiper-slide {
+  position: relative;
+}
+
 .main-slider__img {
   cursor: pointer;
   object-fit: cover;
@@ -16,6 +21,20 @@
   @include tablet {
     min-width: 200px;
   }
+}
+
+.main-slider__actor-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  background-color: rgba($color: #cf6100, $alpha: 0.5);
+  position: absolute;
+  bottom: 10%;
+}
+.main-slider__actor-name {
+  font-weight: 700;
 }
 
 .swiper-button-prev {
