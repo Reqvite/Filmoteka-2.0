@@ -1,294 +1,301 @@
-import { refs } from "../refs";
+import { refs } from '../refs';
 
-import { popularMovieMarkup } from "../markups/popularMarkups"; 
+import { popularMovieMarkup } from '../markups/popularMarkups';
 
-import { fetchPopularMovieDay } from "../service/fetchPopularMovie";
+import { fetchPopularMovieDay } from '../service/fetchPopularMovie';
 
-import { queryMovieMarkup } from "../markups/searchQueryMarkup";
+import { queryMovieMarkup } from '../markups/searchQueryMarkup';
 
-const paginationArrowBackwardItem = document.querySelector('.pagination-list__arrow-backward');
+const paginationArrowBackwardItem = document.querySelector(
+  '.pagination-list__arrow-backward'
+);
 
-const backWardDotsItem = document.querySelector('.pagination-list__backward-dots');
-const backWardDotsSpan = document.querySelector('.pagination-list__backward-dots-span');
-         
+const backWardDotsItem = document.querySelector(
+  '.pagination-list__backward-dots'
+);
+const backWardDotsSpan = document.querySelector(
+  '.pagination-list__backward-dots-span'
+);
 
-const paginationListprevPageItem = document.querySelector('.pagination-list__prev-page-item');
-const paginationListprevPageSpan = document.querySelector('.pagination-list__prev-page');
+const paginationListprevPageItem = document.querySelector(
+  '.pagination-list__prev-page-item'
+);
+const paginationListprevPageSpan = document.querySelector(
+  '.pagination-list__prev-page'
+);
 
-const paginationListActiveprevPageItem = document.querySelector('.pagination-list__active-prev-item');
-const paginationListActiveprevPageSpan = document.querySelector('.pagination-list__active-prev-page');
-  
-const paginationListActivePageSpan = document.querySelector('.pagination-list__active-page');
-        
-const paginationListActivenextPageItem = document.querySelector('.pagination-list__active-next-item');
-const paginationListActivenextPageSpan = document.querySelector('.pagination-list__active-next-page');
-        
-const paginationListnextPageItem = document.querySelector('.pagination-list__next-item');
-const paginationListnextPageSpan = document.querySelector('.pagination-list__next-page');
-   
-const forwardDotsItem = document.querySelector('.pagination-list__forward-dots');        
-const forwardDotsSpan = document.querySelector('.pagination-list__forward-dots-span');
+const paginationListActiveprevPageItem = document.querySelector(
+  '.pagination-list__active-prev-item'
+);
+const paginationListActiveprevPageSpan = document.querySelector(
+  '.pagination-list__active-prev-page'
+);
 
-const forwardDotsNextItem = document.querySelector('.pagination-list__forward-dots-next');
+const paginationListActivePageSpan = document.querySelector(
+  '.pagination-list__active-page'
+);
 
-const paginationListTotalSpan = document.querySelector('.pagination-list__total-span');
-    
+const paginationListActivenextPageItem = document.querySelector(
+  '.pagination-list__active-next-item'
+);
+const paginationListActivenextPageSpan = document.querySelector(
+  '.pagination-list__active-next-page'
+);
 
-const paginationListArrowForward = document.querySelector('.pagination-list__arrow-forward');
+const paginationListnextPageItem = document.querySelector(
+  '.pagination-list__next-item'
+);
+const paginationListnextPageSpan = document.querySelector(
+  '.pagination-list__next-page'
+);
+
+const forwardDotsItem = document.querySelector(
+  '.pagination-list__forward-dots'
+);
+const forwardDotsSpan = document.querySelector(
+  '.pagination-list__forward-dots-span'
+);
+
+const forwardDotsNextItem = document.querySelector(
+  '.pagination-list__forward-dots-next'
+);
+
+const paginationListTotalSpan = document.querySelector(
+  '.pagination-list__total-span'
+);
+
+const paginationListArrowForward = document.querySelector(
+  '.pagination-list__arrow-forward'
+);
 
 let minLastPage;
 let totalPage;
 
-let query = null
+let query = null;
 
-export const createDefaultPagination = async (filmName,pages) => {
-    let pageNumber = Number(localStorage.getItem("popularPage")) || 1;
-    [...refs.paginationList.children].forEach(el => {
-        el.style.display = 'block';
-    })
-    
-    if (pages) {
-        hideHomePage()
-        totalPage = Number(pages);
-        query = filmName;
-        pageNumber = 1;
+export const createDefaultPagination = async (filmName, pages) => {
+  let pageNumber = Number(localStorage.getItem('popularPage')) || 1;
+  [...refs.paginationList.children].forEach(el => {
+    el.style.display = 'block';
+  });
 
-     let allButtons = document.querySelectorAll('.pagination-list__button');
+  if (pages) {
+    hideHomePage();
+    totalPage = Number(pages);
+    query = filmName;
+    pageNumber = 1;
 
-    const arrOfButtons = [...allButtons]
-   
-        arrOfButtons.find(el => el.classList.contains('is-active')).classList.remove('is-active')
-        
-    } else {
-        showHome()
-     const resp = await fetchPopularMovieDay(pageNumber)
-    totalPage = Number(resp.data.total_pages) 
-    }
-
-    if (totalPage < 5) {
-        paginationArrowBackwardItem.style.display = 'none'
-        paginationListArrowForward.style.display = 'none'
-        paginationListActivenextPageItem.style.display = 'none'
-        forwardDotsNextItem.style.display = 'none'
-
-        const filterBtns = [...refs.paginationList.children]
-            .filter(el => !el.outerHTML.includes('style="display: none;'))
-            .reverse()
-           
-        while (filterBtns.length !== totalPage) {
-            filterBtns[0].style.display = 'none'
-            filterBtns.splice(0,1)
-        }
-    }
-  
-    if (pageNumber > 1) {
-
-        paginationArrowBackwardItem.style.display = 'block';
-       
-    } else {
-        paginationArrowBackwardItem.style.display = 'none'
-    }
-
- 
-    if (+pageNumber === +totalPage) {
-        paginationListArrowForward.style.display = 'none'
-    } else {
-        paginationListArrowForward.style.display = 'block'
-    }
-
-      if (totalPage <= 5 && pages) {
-        paginationListArrowForward.style.display = 'none'; 
-        }
-    
-    if (pageNumber < 5) {
-    
-        backWardDotsSpan.textContent = '2';
-        paginationListActivenextPageSpan.textContent = '...';
-
-        paginationListnextPageItem.style.display = 'none';
-        forwardDotsItem.style.display = 'none';
-        paginationListTotalSpan.textContent = totalPage;
-
-
-    } else {
-         
-
-          minLastPage = totalPage - 3;
-            
-        paginationListTotalSpan.textContent = totalPage;
-        if (pageNumber <= totalPage && pageNumber >= minLastPage) {
-            if (pageNumber === totalPage) {
-                paginationListArrowForward.display = 'none'
-            } else {
-                paginationListArrowForward.display = 'block'
-            }
-                
-            forwardDotsSpan.textContent = totalPage - 1;
-            paginationListnextPageSpan.textContent = totalPage - 2;
-            paginationListActivenextPageSpan.textContent = totalPage - 3;
-            paginationListActivePageSpan.textContent = totalPage - 4;
-            paginationListprevPageItem.style.display = 'none';
-            paginationListActiveprevPageItem.style.display = 'none';
-
-
-        } else {
-            backWardDotsSpan.textContent = '...';
-            paginationListnextPageItem.style.display = 'block';
-            forwardDotsItem.style.display = 'block';
-            paginationListprevPageSpan.textContent = +pageNumber - 2;
-            paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
-            paginationListActivePageSpan.textContent = pageNumber;
-            paginationListActivenextPageSpan.textContent = +pageNumber + 1;
-            paginationListnextPageSpan.textContent = +pageNumber + 2;
-
-           
-        }
-    
-    }
-
-    let allSpans = document.querySelectorAll('.pagination-list span');
-
-     const arrOfSpans = [...allSpans]
-
-    arrOfSpans.find(el => el.textContent === String(pageNumber)).closest('button').classList.add('is-active')
-   
-
-}
-
-createDefaultPagination()
-
-
-export const handlePagination = async (e) => {
-    
-        let pageNumber = e.target.textContent;
- 
-    if (e.target.closest('li').dataset.arrow) {
-        if (e.target.closest('li').dataset.arrow === 'forward') {
-            pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 1;
-        } else {
-             pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 1;
-        }
-    } 
-
-    if (e.target.closest('li').dataset.dots && e.target.textContent === '...') {
-        if (e.target.closest('li').dataset.dots === 'forward') {
-            pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 5;
-        } else {
-            if (+refs.popularFilmList.getAttribute('data-currentPage') === 5) {
-               pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 4;
-            } else {
-                pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 5;
-            }         
-        }
-    } 
-        
-   
-    if (+pageNumber === +refs.popularFilmList.getAttribute('data-currentPage')) {
-        return;
-    }
-
-        refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
-    localStorage.setItem('popularPage', pageNumber)
-
-    refs.popularFilmList.innerHTML = '';
-
-    if (query) {
-        queryMovieMarkup(query, pageNumber)
-    } else {
-      popularMovieMarkup(pageNumber)   
-    }
-
-
-    if (totalPage <= 5) {
-        
-    } else {
-        if (pageNumber > 1) {
-
-        paginationArrowBackwardItem.style.display ='block'
-       
-    } else {
-        paginationArrowBackwardItem.style.display ='none'
-     }
-
-
-    if (pageNumber >= 5) {
-
-             minLastPage = totalPage - 3;
-
-        if (+pageNumber <= +totalPage && +pageNumber >= +minLastPage) {
-        
-            if (+pageNumber === +totalPage) {
-           
-               paginationListArrowForward.style.display = 'none'
-           } else {
-               paginationListArrowForward.style.display = 'block'
-                }
-
-            
-            forwardDotsItem.style.display = 'block';
-            forwardDotsSpan.textContent = totalPage - 1;
-            paginationListnextPageItem.style.display = 'block';
-            paginationListnextPageSpan.textContent = totalPage - 2;
-            paginationListActivenextPageSpan.textContent = totalPage - 3;
-            paginationListActivePageSpan.textContent = totalPage - 4;
-            paginationListprevPageItem.style.display = 'none';
-            paginationListActiveprevPageItem.style.display = 'none';
-            backWardDotsItem.display = 'none'
-            backWardDotsSpan.textContent = '...'
-
-        } else {
-                      backWardDotsSpan.textContent = '...';
-            paginationListnextPageItem.style.display = 'block';
-            forwardDotsItem.style.display = 'block';
-            paginationListprevPageItem.style.display = 'block';
-            paginationListActiveprevPageItem.style.display = 'block';
-         paginationListprevPageSpan.textContent = +pageNumber - 2;
-            paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
-            paginationListActivePageSpan.textContent = pageNumber; 
-            paginationListActivenextPageSpan.textContent = +pageNumber + 1;
-            paginationListnextPageSpan.textContent = +pageNumber + 2;
-            forwardDotsSpan.textContent = '...'
-
-        } 
-    } else {
-      
-        backWardDotsSpan.textContent = 2;
-        paginationListprevPageSpan.textContent = 3;
-         paginationListActiveprevPageSpan.textContent = 4;
-            paginationListActivePageSpan.textContent = 5;
-            paginationListActivenextPageSpan.textContent = '...';
-
-            paginationListnextPageItem.style.display = 'none';
-        forwardDotsItem.style.display = 'none';
-        
-        paginationListArrowForward.style.display = 'block';
-                paginationListprevPageItem.style.display = 'block';
-                paginationListActiveprevPageItem.style.display = 'block';
-        } 
-    }
-   
-   
-    let allSpans = document.querySelectorAll('.pagination-list span');
     let allButtons = document.querySelectorAll('.pagination-list__button');
 
-    const arrOfSpans = [...allSpans]
-    const arrOfButtons = [...allButtons]
-   
+    const arrOfButtons = [...allButtons];
 
-    arrOfButtons.find(el => el.classList.contains('is-active')).classList.remove('is-active')
-    arrOfSpans.find(el => el.textContent === String(pageNumber)).closest('button').classList.add('is-active')
-}
+    arrOfButtons
+      .find(el => el.classList.contains('is-active'))
+      .classList.remove('is-active');
+  } else {
+    showHome();
+    const resp = await fetchPopularMovieDay(pageNumber);
+    totalPage = Number(resp.data.total_pages);
+  }
 
+  if (totalPage < 5) {
+    paginationArrowBackwardItem.style.display = 'none';
+    paginationListArrowForward.style.display = 'none';
+    paginationListActivenextPageItem.style.display = 'none';
+    forwardDotsNextItem.style.display = 'none';
 
-refs.paginationList.addEventListener('click', handlePagination)
+    const filterBtns = [...refs.paginationList.children]
+      .filter(el => !el.outerHTML.includes('style="display: none;'))
+      .reverse();
 
+    while (filterBtns.length !== totalPage) {
+      filterBtns[0].style.display = 'none';
+      filterBtns.splice(0, 1);
+    }
+  }
+
+  if (pageNumber > 1) {
+    paginationArrowBackwardItem.style.display = 'block';
+  } else {
+    paginationArrowBackwardItem.style.display = 'none';
+  }
+
+  if (+pageNumber === +totalPage) {
+    paginationListArrowForward.style.display = 'none';
+  } else {
+    paginationListArrowForward.style.display = 'block';
+  }
+
+  if (totalPage <= 5 && pages) {
+    paginationListArrowForward.style.display = 'none';
+  }
+
+  if (pageNumber < 5) {
+    backWardDotsSpan.textContent = '2';
+    paginationListActivenextPageSpan.textContent = '...';
+
+    paginationListnextPageItem.style.display = 'none';
+    forwardDotsItem.style.display = 'none';
+    paginationListTotalSpan.textContent = totalPage;
+  } else {
+    minLastPage = totalPage - 3;
+
+    paginationListTotalSpan.textContent = totalPage;
+    if (pageNumber <= totalPage && pageNumber >= minLastPage) {
+      if (pageNumber === totalPage) {
+        paginationListArrowForward.display = 'none';
+      } else {
+        paginationListArrowForward.display = 'block';
+      }
+
+      forwardDotsSpan.textContent = totalPage - 1;
+      paginationListnextPageSpan.textContent = totalPage - 2;
+      paginationListActivenextPageSpan.textContent = totalPage - 3;
+      paginationListActivePageSpan.textContent = totalPage - 4;
+      paginationListprevPageItem.style.display = 'none';
+      paginationListActiveprevPageItem.style.display = 'none';
+    } else {
+      backWardDotsSpan.textContent = '...';
+      paginationListnextPageItem.style.display = 'block';
+      forwardDotsItem.style.display = 'block';
+      paginationListprevPageSpan.textContent = +pageNumber - 2;
+      paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
+      paginationListActivePageSpan.textContent = pageNumber;
+      paginationListActivenextPageSpan.textContent = +pageNumber + 1;
+      paginationListnextPageSpan.textContent = +pageNumber + 2;
+    }
+  }
+
+  let allSpans = document.querySelectorAll('.pagination-list span');
+
+  const arrOfSpans = [...allSpans];
+
+  arrOfSpans
+    .find(el => el.textContent === String(pageNumber))
+    .closest('button')
+    .classList.add('is-active');
+};
+
+createDefaultPagination();
+
+export const handlePagination = async e => {
+  let pageNumber = e.target.textContent;
+
+  if (e.target.closest('li').dataset.arrow) {
+    if (e.target.closest('li').dataset.arrow === 'forward') {
+      pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 1;
+    } else {
+      pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 1;
+    }
+  }
+
+  if (e.target.closest('li').dataset.dots && e.target.textContent === '...') {
+    if (e.target.closest('li').dataset.dots === 'forward') {
+      pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') + 5;
+    } else {
+      if (+refs.popularFilmList.getAttribute('data-currentPage') === 5) {
+        pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 4;
+      } else {
+        pageNumber = +refs.popularFilmList.getAttribute('data-currentPage') - 5;
+      }
+    }
+  }
+
+  if (+pageNumber === +refs.popularFilmList.getAttribute('data-currentPage')) {
+    return;
+  }
+
+  refs.popularFilmList.setAttribute('data-currentPage', pageNumber);
+  localStorage.setItem('popularPage', pageNumber);
+
+  refs.popularFilmList.innerHTML = '';
+
+  if (query) {
+    queryMovieMarkup(query, pageNumber);
+  } else {
+    popularMovieMarkup(pageNumber);
+  }
+
+  if (totalPage <= 5) {
+  } else {
+    if (pageNumber > 1) {
+      paginationArrowBackwardItem.style.display = 'block';
+    } else {
+      paginationArrowBackwardItem.style.display = 'none';
+    }
+
+    if (pageNumber >= 5) {
+      minLastPage = totalPage - 3;
+
+      if (+pageNumber <= +totalPage && +pageNumber >= +minLastPage) {
+        if (+pageNumber === +totalPage) {
+          paginationListArrowForward.style.display = 'none';
+        } else {
+          paginationListArrowForward.style.display = 'block';
+        }
+
+        forwardDotsItem.style.display = 'block';
+        forwardDotsSpan.textContent = totalPage - 1;
+        paginationListnextPageItem.style.display = 'block';
+        paginationListnextPageSpan.textContent = totalPage - 2;
+        paginationListActivenextPageSpan.textContent = totalPage - 3;
+        paginationListActivePageSpan.textContent = totalPage - 4;
+        paginationListprevPageItem.style.display = 'none';
+        paginationListActiveprevPageItem.style.display = 'none';
+        backWardDotsItem.display = 'none';
+        backWardDotsSpan.textContent = '...';
+      } else {
+        backWardDotsSpan.textContent = '...';
+        paginationListnextPageItem.style.display = 'block';
+        forwardDotsItem.style.display = 'block';
+        paginationListprevPageItem.style.display = 'block';
+        paginationListActiveprevPageItem.style.display = 'block';
+        paginationListprevPageSpan.textContent = +pageNumber - 2;
+        paginationListActiveprevPageSpan.textContent = +pageNumber - 1;
+        paginationListActivePageSpan.textContent = pageNumber;
+        paginationListActivenextPageSpan.textContent = +pageNumber + 1;
+        paginationListnextPageSpan.textContent = +pageNumber + 2;
+        forwardDotsSpan.textContent = '...';
+      }
+    } else {
+      backWardDotsSpan.textContent = 2;
+      paginationListprevPageSpan.textContent = 3;
+      paginationListActiveprevPageSpan.textContent = 4;
+      paginationListActivePageSpan.textContent = 5;
+      paginationListActivenextPageSpan.textContent = '...';
+
+      paginationListnextPageItem.style.display = 'none';
+      forwardDotsItem.style.display = 'none';
+
+      paginationListArrowForward.style.display = 'block';
+      paginationListprevPageItem.style.display = 'block';
+      paginationListActiveprevPageItem.style.display = 'block';
+    }
+  }
+
+  let allSpans = document.querySelectorAll('.pagination-list span');
+  let allButtons = document.querySelectorAll('.pagination-list__button');
+
+  const arrOfSpans = [...allSpans];
+  const arrOfButtons = [...allButtons];
+
+  arrOfButtons
+    .find(el => el.classList.contains('is-active'))
+    .classList.remove('is-active');
+  arrOfSpans
+    .find(el => el.textContent === String(pageNumber))
+    .closest('button')
+    .classList.add('is-active');
+};
+
+refs.paginationList.addEventListener('click', handlePagination);
 
 function hideHomePage() {
-    refs.titleMain.style.display = 'none';
-    refs.sliderWrapper.style.display = 'none';
+  refs.titleMain.style.display = 'none';
+  refs.sliderWrapper.style.display = 'none';
 }
 
 function showHome() {
-    refs.titleMain.style.display = 'block';
-    refs.sliderWrapper.style.display = 'block';
+  refs.titleMain.style.display = 'block';
+  refs.sliderWrapper.style.display = 'block';
 }

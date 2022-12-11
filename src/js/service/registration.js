@@ -1,19 +1,34 @@
-import { Notify } from "notiflix";
+import { Notify } from 'notiflix';
 
-import { initializeApp } from "firebase/app";
-import { getDatabase, set, ref, enableLogging, update,child, get, onDisconnect} from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import {
+  getDatabase,
+  set,
+  ref,
+  enableLogging,
+  update,
+  child,
+  get,
+  onDisconnect,
+} from 'firebase/database';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth';
 
-import { refs } from "../refs";
+import { refs } from '../refs';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCpmvTY0ghry2BME3vXs05gK7Jms9EY33Q",
-  authDomain: "filmoteka-new.firebaseapp.com",
-  databaseURL: "https://filmoteka-new-default-rtdb.firebaseio.com",
-  projectId: "filmoteka-new",
-  storageBucket: "filmoteka-new.appspot.com",
-  messagingSenderId: "526905324301",
-  appId: "1:526905324301:web:6258b94ba2aa8675bd3644"
+  apiKey: 'AIzaSyCpmvTY0ghry2BME3vXs05gK7Jms9EY33Q',
+  authDomain: 'filmoteka-new.firebaseapp.com',
+  databaseURL: 'https://filmoteka-new-default-rtdb.firebaseio.com',
+  projectId: 'filmoteka-new',
+  storageBucket: 'filmoteka-new.appspot.com',
+  messagingSenderId: '526905324301',
+  appId: '1:526905324301:web:6258b94ba2aa8675bd3644',
 };
 
 // Initialize Firebase
@@ -25,43 +40,41 @@ const dt = new Date();
 
 refs.registrationForm?.addEventListener('submit', logInUser);
 
- 
-refs.clickRegistrationBtn?.addEventListener('click', handleRegistration)
-
+refs.clickRegistrationBtn?.addEventListener('click', handleRegistration);
 
 function handleRegistration(e) {
-  e.preventDefault()
-    if (refs.clickRegistrationBtn.textContent === 'Log in') {
-        refs.registrationForm.addEventListener('submit', logInUser);
-        refs.registrationForm.removeEventListener('submit', signUpUser);
+  e.preventDefault();
+  if (refs.clickRegistrationBtn.textContent === 'Log in') {
+    refs.registrationForm.addEventListener('submit', logInUser);
+    refs.registrationForm.removeEventListener('submit', signUpUser);
 
-         refs.notRegisteredText.style.display = 'block'    
-        refs.nameInput.style.display = 'none'
-        refs.forgotPasswordLink.style.display = 'block'
-        refs.clickRegistrationBtn.textContent = 'Sign in'
-        refs.submitBtn.value = 'Log in'
-    } else {
+    refs.notRegisteredText.style.display = 'block';
+    refs.nameInput.style.display = 'none';
+    refs.forgotPasswordLink.style.display = 'block';
+    refs.clickRegistrationBtn.textContent = 'Sign in';
+    refs.submitBtn.value = 'Log in';
+  } else {
     refs.registrationForm.removeEventListener('submit', logInUser);
     refs.registrationForm.addEventListener('submit', signUpUser);
-    refs.notRegisteredText.style.display = 'none'    
-    refs.nameInput.style.display = 'flex'
-    refs.forgotPasswordLink.style.display = 'none'
-        refs.clickRegistrationBtn.textContent = 'Log in'
-        refs.submitBtn.value = 'Sign in'
-        }
+    refs.notRegisteredText.style.display = 'none';
+    refs.nameInput.style.display = 'flex';
+    refs.forgotPasswordLink.style.display = 'none';
+    refs.clickRegistrationBtn.textContent = 'Log in';
+    refs.submitBtn.value = 'Sign in';
+  }
 }
 
 //registration
 function signUpUser(e) {
-    e.preventDefault();
+  e.preventDefault();
   const username = refs.registrationForm.elements[0].value;
   const email = refs.registrationForm.elements[1].value;
-    const password = refs.registrationForm.elements[2].value;
-    
+  const password = refs.registrationForm.elements[2].value;
+
   createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       // Signed in
-        const user = userCredential.user;
+      const user = userCredential.user;
       set(ref(database, 'users/' + user.uid), {
         username,
         email: email,
@@ -71,7 +84,7 @@ function signUpUser(e) {
         {
           timeout: 1000,
         }
-        );
+      );
     })
     .catch(error => {
       const errorCode = error.code;
@@ -93,7 +106,7 @@ function logInUser(e) {
   signInWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       // Signed in
-        
+
       const user = userCredential.user;
       const uid = user.uid;
 
@@ -104,7 +117,6 @@ function logInUser(e) {
       get(child(dbRef, `users/${uid}`))
         .then(snapshot => {
           if (snapshot.exists()) {
-
           } else {
             console.log('No data available');
           }
@@ -132,7 +144,7 @@ onAuthStateChanged(auth, user => {
     get(child(dbRef, `users/${uid}`))
       .then(snapshot => {
         if (snapshot.exists()) {
-          console.log(snapshot.val())
+          console.log(snapshot.val());
           refs.logOutBtn.style.display = 'block';
           refs.watchListBtn.style.display = 'block';
           refs.accountBtn.style.display = 'block';
@@ -151,13 +163,11 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-
 refs.logOutBtn?.addEventListener('click', e => {
-    
   signOut(auth)
     .then(() => {
       // Sign-out successful.
-                refs.logOutBtn.style.display = 'none';
+      refs.logOutBtn.style.display = 'none';
       refs.watchListBtn.style.display = 'none';
       refs.accountBtn.style.display = 'none';
       refs.signInBtn.style.display = 'block';

@@ -1,52 +1,54 @@
 import img from '../../images/errorImgs/csaff-no-poster.jpg';
 
-import { refs } from "../refs"
+import { refs } from '../refs';
 
-import { fetchPopularActors } from "../service/fetchPopularActors";
-import { fetchFilmDetails } from "../service/fetchFilmDetails";
+import { fetchPopularActors } from '../service/fetchPopularActors';
+import { fetchFilmDetails } from '../service/fetchFilmDetails';
 
-export const actorDetailsMarkup = async (id) => {
-    const resp = await fetchPopularActors();
+export const actorDetailsMarkup = async id => {
+  const resp = await fetchPopularActors();
 
-    const { profile_path, name, known_for } = resp.data.results.filter((el) => el.id === Number(id))[0];
+  const { profile_path, name, known_for } = resp.data.results.filter(
+    el => el.id === Number(id)
+  )[0];
 
-
-  const actorFilmsListMarkup = known_for.reduce((acc, { poster_path, original_title, original_name, id }) => {
-      
+  const actorFilmsListMarkup = known_for.reduce(
+    (acc, { poster_path, original_title, original_name, media_type, id }) => {
+      console.log(known_for);
       poster_path
-    ? (poster_path = `https://www.themoviedb.org/t/p/w500/${poster_path}`)
-    : (poster_path = img);
+        ? (poster_path = `https://www.themoviedb.org/t/p/w500/${poster_path}`)
+        : (poster_path = img);
 
-
-
-       return acc + `<li class="actor-films-list__item" data-name="film" data-id="${id}">
-        <img class="actor-films-list__img" src="${poster_path}"  width="150" height="255" alt="${original_title || original_name 
-}">
-        <p class="actor-films-list__title">${original_title || original_name}</p>
+      return (
+        acc +
+        `<li class="actor-films-list__item" data-name="film" data-id="${id}" data-type=${media_type}>
+        <img class="actor-films-list__img" src="${poster_path}"  width="150" height="255" alt="${
+          original_title || original_name
+        }">
+        <p class="actor-films-list__title">${
+          original_title || original_name
+        }</p>
         </li>`
-    },'')
+      );
+    },
+    ''
+  );
 
-
-    const markup = ` <div class="modal-container-actors">
+  const markup = ` <div class="modal-container-actors">
   <img class="modal-container-actors__img" src="https://www.themoviedb.org/t/p/w500/${profile_path}" alt="${name} class="modal-container__img">
   <div class="modal-details">
     <p class="modal-details__name">${name} is known for</p>
     <ul class="actor-films-list list">${actorFilmsListMarkup}</ul>
   </div>
-</div>`
-        
-   
-    
-    refs.modal.insertAdjacentHTML("afterbegin", markup)
-       refs.backdropModal.classList.remove('is-hidden')
-}
+</div>`;
 
+  refs.modal.insertAdjacentHTML('afterbegin', markup);
+  refs.backdropModal.classList.remove('is-hidden');
+};
 
+export const createFilmDetailsMarkup = async idFilm => {
+  const resp = await fetchFilmDetails(idFilm);
 
-export const createFilmDetailsMarkup = async (idFilm) => {
-
-    const resp = await fetchFilmDetails(idFilm);
-     
   let {
     poster_path,
     original_title,
@@ -66,8 +68,6 @@ export const createFilmDetailsMarkup = async (idFilm) => {
   vote_average
     ? (vote_average = vote_average.toFixed(1))
     : (vote_average = '?');
-
-
 
   if (vote_average >= 7) {
     rating = 'masterpiece';
@@ -109,34 +109,23 @@ export const createFilmDetailsMarkup = async (idFilm) => {
 	</div>
 </div>`;
 
-
-
   if (refs.modal.children.length === 1) {
+    refs.modal.insertAdjacentHTML('beforeend', markup);
 
-    refs.modal.insertAdjacentHTML("beforeend", markup) 
-        
-    const filmModalContainer = document.querySelector('.modal-container-film')
-    
-    filmModalContainer.style.marginTop = '20px'
-    
+    const filmModalContainer = document.querySelector('.modal-container-film');
+
+    filmModalContainer.style.marginTop = '20px';
   } else if (refs.modal.children.length >= 2) {
+    let filmContainer = document.querySelector('.modal-container-film');
+    filmContainer.remove();
+    refs.modal.insertAdjacentHTML('beforeend', markup);
 
-        let filmContainer = document.querySelector('.modal-container-film')   
-        filmContainer.remove();
-      refs.modal.insertAdjacentHTML("beforeend", markup) 
-        
-     const filmModalContainer = document.querySelector('.modal-container-film')
-    
-    filmModalContainer.style.marginTop = '20px'
-  }
-    
-  else {
-    
-           refs.modal.insertAdjacentHTML("afterbegin", markup)
+    const filmModalContainer = document.querySelector('.modal-container-film');
+
+    filmModalContainer.style.marginTop = '20px';
+  } else {
+    refs.modal.insertAdjacentHTML('afterbegin', markup);
   }
 
-  refs.backdropModal.classList.remove('is-hidden')
-}
-    
-
-
+  refs.backdropModal.classList.remove('is-hidden');
+};
